@@ -65,7 +65,7 @@ func main() {
 		}
 	}
 
-	allManagers := append([]Person{}, managers...)
+	allManagers := make([]Person, 0)
 	queue := append([]Person{}, managers...)
 	allIcs := append([]Person{}, ics...)
 
