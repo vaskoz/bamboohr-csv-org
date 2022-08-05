@@ -84,21 +84,10 @@ func main() {
 		queue = newQueue
 	}
 
-	sort.Slice(managers, func(i, j int) bool {
-		return managers[i].Name < managers[j].Name
-	})
-
-	sort.Slice(ics, func(i, j int) bool {
-		return ics[i].Name < ics[j].Name
-	})
-
-	sort.Slice(allManagers, func(i, j int) bool {
-		return allManagers[i].Name < allManagers[j].Name
-	})
-
-	sort.Slice(allIcs, func(i, j int) bool {
-		return allIcs[i].Name < allIcs[j].Name
-	})
+	sort.Slice(managers, func(i, j int) bool { return managers[i].Name < managers[j].Name })
+	sort.Slice(ics, func(i, j int) bool { return ics[i].Name < ics[j].Name })
+	sort.Slice(allManagers, func(i, j int) bool { return allManagers[i].Name < allManagers[j].Name })
+	sort.Slice(allIcs, func(i, j int) bool { return allIcs[i].Name < allIcs[j].Name })
 
 	fmt.Println("Direct reports for:", start.Name)
 	fmt.Println("Number of directs:", len(managers)+len(ics))
