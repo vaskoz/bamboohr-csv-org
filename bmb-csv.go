@@ -65,6 +65,25 @@ func main() {
 		}
 	}
 
+	allManagers := append([]Person{}, managers...)
+	queue := append([]Person{}, managers...)
+	allIcs := append([]Person{}, ics...)
+
+	for len(queue) != 0 {
+		var newQueue []Person
+
+		for _, person := range queue {
+			if directs, isManager := managerToDirects[person.ID]; isManager {
+				allManagers = append(allManagers, person)
+				newQueue = append(newQueue, directs...)
+			} else {
+				allIcs = append(allIcs, person)
+			}
+		}
+
+		queue = newQueue
+	}
+
 	sort.Slice(managers, func(i, j int) bool {
 		return managers[i].Name < managers[j].Name
 	})
@@ -87,6 +106,8 @@ func main() {
 	} else {
 		fmt.Println("Individual Contributors:", PrintNames(ics))
 	}
+
+	fmt.Println("Entire Org Size:", len(allManagers)+len(allIcs))
 }
 
 func PrintNames(people []Person) string {
