@@ -108,6 +108,20 @@ func main() {
 	}
 
 	fmt.Println("Entire Org Size:", len(allManagers)+len(allIcs))
+	fmt.Println("Entire Org Manager Count:", len(allManagers))
+	fmt.Println("Entire Org Individual Contributor Count:", len(allIcs))
+
+	if len(allManagers) == 0 {
+		fmt.Println("Org-wide Managers: N/A")
+	} else {
+		fmt.Println("Org-wide Managers: ", PrintNames(allManagers))
+	}
+
+	if len(allIcs) == 0 {
+		fmt.Println("Org-wide Individual Contributors: N/A")
+	} else {
+		fmt.Println("Org-wide Individual Contributors:", PrintNames(allIcs))
+	}
 }
 
 func PrintNames(people []Person) string {
