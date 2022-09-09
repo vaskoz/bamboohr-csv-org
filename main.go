@@ -47,7 +47,7 @@ func main() {
 		managerToDirects[p.ManagerID] = append(managerToDirects[p.ManagerID], p)
 	}
 
-	searchName := os.Args[1]
+	searchName := strings.ToLower(os.Args[1])
 	var start *Person
 
 	for name, p := range lowerNameToPerson {
