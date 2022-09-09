@@ -39,16 +39,24 @@ func main() {
 
 	lowerNameToPerson := make(map[string]Person)
 	managerToDirects := make(map[string][]Person)
+	var topOfOrg *Person
 
 	for _, r := range records {
 		p := Person{r[0], r[1], r[2]}
+		if p.ManagerID == "" {
+			topOfOrg = &p
+		}
 		key := strings.ToLower(r[1])
 		lowerNameToPerson[key] = p
 		managerToDirects[p.ManagerID] = append(managerToDirects[p.ManagerID], p)
 	}
 
-	searchName := strings.ToLower(os.Args[1])
+	var searchName string
 	var start *Person
+
+	if len(os.Args) > 1 {
+		searchName = strings.ToLower(os.Args[1])
+	}
 
 	for name, p := range lowerNameToPerson {
 		if strings.Contains(name, searchName) {
@@ -57,9 +65,11 @@ func main() {
 		}
 	}
 
-	if start == nil {
+	if start == nil && searchName != "" {
 		fmt.Printf("person '%s' not found\n", searchName)
 		os.Exit(1)
+	} else if searchName == "" {
+		start = topOfOrg
 	}
 
 	var managers, ics []Person
