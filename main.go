@@ -15,6 +15,8 @@ type Person struct {
 	ManagerID string
 }
 
+var ()
+
 func main() {
 	csvFile := os.Getenv("BMB_CSV_FILE")
 
@@ -46,13 +48,18 @@ func main() {
 	}
 
 	searchName := os.Args[1]
-	var start Person
+	var start *Person
 
 	for name, p := range lowerNameToPerson {
 		if strings.Contains(name, searchName) {
-			start = p
+			start = &p
 			break
 		}
+	}
+
+	if start == nil {
+		fmt.Printf("person '%s' not found\n", searchName)
+		os.Exit(1)
 	}
 
 	var managers, ics []Person
