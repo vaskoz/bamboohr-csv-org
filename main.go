@@ -37,6 +37,7 @@ func main() {
 		log.Fatal(err)
 	}
 
+	idToPerson := make(map[string]Person)
 	lowerNameToPerson := make(map[string]Person)
 	managerToDirects := make(map[string][]Person)
 	var topOfOrg *Person
@@ -49,6 +50,7 @@ func main() {
 		key := strings.ToLower(r[1])
 		lowerNameToPerson[key] = p
 		managerToDirects[p.ManagerID] = append(managerToDirects[p.ManagerID], p)
+		idToPerson[p.ID] = p
 	}
 
 	var searchName string
@@ -107,6 +109,8 @@ func main() {
 	sort.Slice(allIcs, func(i, j int) bool { return allIcs[i].Name < allIcs[j].Name })
 
 	fmt.Println("Direct reports for:", start.Name)
+	supervisor := idToPerson[start.ManagerID]
+	fmt.Println("Supervisor:", supervisor.Name)
 	fmt.Println("Number of directs:", len(managers)+len(ics))
 
 	if len(managers) == 0 {
