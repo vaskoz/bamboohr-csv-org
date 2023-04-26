@@ -37,9 +37,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	idToPerson := make(map[string]Person)
-	lowerNameToPerson := make(map[string]Person)
-	managerToDirects := make(map[string][]Person)
+	idToPerson := make(map[string]*Person)
+	lowerNameToPerson := make(map[string]*Person)
+	managerToDirects := make(map[string][]*Person)
 	var topOfOrg *Person
 
 	for _, r := range records {
@@ -48,9 +48,9 @@ func main() {
 			topOfOrg = &p
 		}
 		key := strings.ToLower(r[1])
-		lowerNameToPerson[key] = p
-		managerToDirects[p.ManagerID] = append(managerToDirects[p.ManagerID], p)
-		idToPerson[p.ID] = p
+		lowerNameToPerson[key] = &p
+		managerToDirects[p.ManagerID] = append(managerToDirects[p.ManagerID], &p)
+		idToPerson[p.ID] = &p
 	}
 
 	var searchName string
@@ -74,7 +74,7 @@ func main() {
 		start = topOfOrg
 	}
 
-	var managers, ics []Person
+	var managers, ics []*Person
 
 	for _, person := range managerToDirects[start.ID] {
 		if _, manager := managerToDirects[person.ID]; manager {
@@ -84,12 +84,12 @@ func main() {
 		}
 	}
 
-	allManagers := make([]Person, 0)
-	queue := append([]Person{}, managers...)
-	allIcs := append([]Person{}, ics...)
+	allManagers := make([]*Person, 0)
+	queue := append([]*Person{}, managers...)
+	allIcs := append([]*Person{}, ics...)
 
 	for len(queue) != 0 {
-		var newQueue []Person
+		var newQueue []*Person
 
 		for _, person := range queue {
 			if directs, isManager := managerToDirects[person.ID]; isManager {
@@ -142,7 +142,7 @@ func main() {
 	}
 }
 
-func PrintNames(people []Person) string {
+func PrintNames(people []*Person) string {
 	names := make([]string, 0, len(people))
 
 	for _, person := range people {
