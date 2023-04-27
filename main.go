@@ -15,8 +15,6 @@ type Person struct {
 	ManagerID string
 }
 
-var ()
-
 func main() {
 	csvFile := os.Getenv("BMB_CSV_FILE")
 
@@ -62,7 +60,7 @@ func main() {
 
 	for name, p := range lowerNameToPerson {
 		if strings.Contains(name, searchName) {
-			start = &p
+			start = p
 			break
 		}
 	}
