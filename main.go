@@ -61,6 +61,7 @@ func main() {
 	for name, p := range lowerNameToPerson {
 		if strings.Contains(name, searchName) {
 			start = p
+
 			break
 		}
 	}
@@ -111,36 +112,21 @@ func main() {
 	fmt.Println("Supervisor:", supervisor.Name)
 	fmt.Println("Number of directs:", len(managers)+len(ics))
 
-	if len(managers) == 0 {
-		fmt.Println("Managers: N/A")
-	} else {
-		fmt.Println("Managers: ", PrintNames(managers))
-	}
-
-	if len(ics) == 0 {
-		fmt.Println("Individual Contributors: N/A")
-	} else {
-		fmt.Println("Individual Contributors:", PrintNames(ics))
-	}
-
+	fmt.Println("Managers: ", PrintNames(managers))
+	fmt.Println("Individual Contributors:", PrintNames(ics))
 	fmt.Println("Entire Org Size:", len(allManagers)+len(allIcs))
 	fmt.Println("Entire Org Manager Count:", len(allManagers))
 	fmt.Println("Entire Org Individual Contributor Count:", len(allIcs))
 
-	if len(allManagers) == 0 {
-		fmt.Println("Org-wide Managers: N/A")
-	} else {
-		fmt.Println("Org-wide Managers: ", PrintNames(allManagers))
-	}
-
-	if len(allIcs) == 0 {
-		fmt.Println("Org-wide Individual Contributors: N/A")
-	} else {
-		fmt.Println("Org-wide Individual Contributors:", PrintNames(allIcs))
-	}
+	fmt.Println("Org-wide Managers: ", PrintNames(allManagers))
+	fmt.Println("Org-wide Individual Contributors:", PrintNames(allIcs))
 }
 
 func PrintNames(people []*Person) string {
+	if len(people) == 0 {
+		return "N/A"
+	}
+
 	names := make([]string, 0, len(people))
 
 	for _, person := range people {
