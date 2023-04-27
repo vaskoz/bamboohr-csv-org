@@ -109,7 +109,7 @@ func main() {
 
 	fmt.Println("Direct reports for:", start.Name)
 	supervisor := idToPerson[start.ManagerID]
-	fmt.Println("Supervisor:", supervisor.Name)
+	fmt.Println("Supervisor:", PrintNames([]*Person{supervisor}))
 	fmt.Println("Number of directs:", len(managers)+len(ics))
 
 	fmt.Println("Managers: ", PrintNames(managers))
@@ -123,7 +123,7 @@ func main() {
 }
 
 func PrintNames(people []*Person) string {
-	if len(people) == 0 {
+	if len(people) == 0 || people[0] == nil {
 		return "N/A"
 	}
 
